@@ -7222,38 +7222,7 @@ function sailTick(dt, t) {
   }
 }
 boatItem.hint = "⛵ The boat: tap to sail";
-function exInt4(it) {
-  if (it.kind !== "cage") return false;
-  if (rescued) {
-    toast("Twombly is already free 🐱");
-    return true;
-  }
-  it.hp--;
-  tone(500, 0.06, "square", 0.08);
-  if (it.hp > 0) {
-    toast("🔓 Picking the lock… " + it.hp + " more");
-    alrt = Math.max(alrt, 0);
-    return true;
-  }
-  rescued = true;
-  EXF.twombly = 1;
-  village.cat = 1;
-  vup({ cat: 1 });
-  ensureCat();
-  if (catItem) {
-    catItem.x = me3.x - 1;
-    catItem.z = me3.z;
-  }
-  alrt = 14;
-  grace = 0;
-  jingle([523, 659, 784, 1047, 1319]);
-  burst(me3.x, 1.5, me3.z, 0xffd24a, 30, 3, 3);
-  showModal(
-    `<h2>🐱 Twombly is free!</h2><p>He leaps out of the cage and into your arms. The gendarmes have heard the commotion… <b>run to the boat and sail home!</b></p><button id="fin" class="on">Run! 🏃</button>`,
-  );
-  $("#fin").onclick = closeModal;
-  return true;
-}
+// (removed: an older exInt4 lock-picking cage handler, never used because a later exInt4 overrides it)
 // ---- leviathan easter egg
 const LEV_SPEECH = [
   "Did I ever tell you about my theory on fishing?",
