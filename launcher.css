@@ -1,0 +1,91 @@
+#menu {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#bfe8ff, #ffe3ee 70%, #fff3d9);
+  padding: 14px;
+  overflow: auto;
+}
+#menu .box {
+  background: var(--card);
+  border-radius: 26px;
+  padding: 24px 20px;
+  max-width: 390px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+#menu h1 {
+  margin: 0;
+  font-size: 34px;
+}
+#menu .sub {
+  color: var(--mute);
+  margin: 2px 0 14px;
+  font-weight: 700;
+}
+#menu button {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 11px;
+  margin: 7px 0;
+  cursor: pointer;
+}
+#menu button.go {
+  background: var(--pink);
+  color: #fff;
+  border-color: var(--pink);
+}
+#menu button.sm {
+  font-size: 13px;
+  padding: 7px;
+  opacity: 0.75;
+}
+#menu textarea,
+#menu input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 6px 0;
+  padding: 8px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  font:
+    12px ui-monospace,
+    monospace;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-user-select: text;
+  user-select: text;
+}
+#menu .t {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mute);
+  margin: 6px 0;
+}
+#menu #st {
+  min-height: 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mute);
+  margin-top: 8px;
+}
+#menu [hidden] {
+  display: none !important;
+}
+#mnu {
+  right: 12px;
+  top: calc(env(safe-area-inset-top, 0px) + 52px);
+  pointer-events: auto;
+  cursor: pointer;
+}
