@@ -3313,7 +3313,7 @@ function moveMe(dt) {
         dt,
         dx,
         dz,
-        (swim && !CRE.fly ? 2.3 : 3.6) * slopeMul(dx, dz) * (CRE.fly ? 2.3 : 1),
+        (swim && !CRE.fly ? 2.3 : 3.6) * slopeMul(dx, dz) * (CRE.fly ? 2.3 : 1) * (keys.shift ? 1.5 : 1),
       );
   if (swim && me3.spd > 0.5 && Math.random() < dt * 7)
     burst(me3.x, SEA + 0.05, me3.z, 0xbfeaff, 2, 0.8, 0.5);
