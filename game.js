@@ -1894,16 +1894,9 @@ $("#home").addEventListener("pointerdown", (e) => {
   e.stopPropagation();
   goHome();
 });
-let jt = [];
 function jumpPress() {
   jumpReq = true;
-  const n = now();
-  jt = jt.filter((t) => n - t < 2000);
-  jt.push(n);
-  if (jt.length >= 4) {
-    jt = [];
-    goHome();
-  }
+  if (jumpBufT <= 0) jumpBufT = 0.1;
 }
 $("#jmp").addEventListener("pointerdown", (e) => {
   e.stopPropagation();
@@ -3197,9 +3190,11 @@ function resolve(a, nx, nz) {
 function stepActor(a, dt, dirx, dirz, spd) {
   const tx = dirx * spd,
     tz = dirz * spd;
-  const acc = a === me3 && slimeAt(a.x, a.z) ? 1.3 : 11;
-  a.vx = (a.vx || 0) + (tx - (a.vx || 0)) * Math.min(1, dt * acc);
-  a.vz = (a.vz || 0) + (tz - (a.vz || 0)) * Math.min(1, dt * acc);
+  const acc = a === me3 && slimeAt(a.x, a.z) ? 1.3 : a === me3 ? 22 : 14;
+  const dec = a === me3 && !slimeAt(a.x, a.z) ? 28 : acc;
+  const k = (tx || tz) ? 1 - Math.exp(-acc * dt) : 1 - Math.exp(-dec * dt);
+  a.vx = (a.vx || 0) + (tx - (a.vx || 0)) * k;
+  a.vz = (a.vz || 0) + (tz - (a.vz || 0)) * k;
   let nx = a.x + a.vx * dt,
     nz = a.z + a.vz * dt;
   const up = (x2, z2) =>
@@ -3228,9 +3223,14 @@ function stepActor(a, dt, dirx, dirz, spd) {
     a.ry += d2 * Math.min(1, dt * 18);
   }
 }
+const LAND_TIME = 0.12; // landing squash duration in seconds; set 0 to disable
 let stuck = 0,
   lastPos = 0,
-  lastSent = { x: 0, z: 0 };
+  lastSent = { x: 0, z: 0 },
+  coyoteT = 0,
+  jumpBufT = 0,
+  landT = 0,
+  airJumped = false;
 function moveMe(dt) {
   if (CLIMB.on || RT.on || (inCave && dead > 0) || PRIS.busted > 0) return;
   const fx = -Math.sin(yaw),
@@ -3304,6 +3304,7 @@ function moveMe(dt) {
       )
     )
       jumpReq = true;
+      jumpBufT = 0.1;
   }
   const swim = !CRE.fly && !inCave && !sailing && gh(me3.x, me3.z) < SEA - 0.02;
   sailing
@@ -3341,22 +3342,44 @@ function moveMe(dt) {
       }
     }
     const gY = supportAt(me3.x, me3.z, me3.y);
-    if (jumpReq && me3.onG) {
-      me3.vy = 6.8;
-      me3.onG = false;
-      tone(520, 0.12, "sine", 0.07);
+    if (!CRE.fly) {
+      if (me3.onG) coyoteT = 0; else coyoteT += dt;
+      if (jumpBufT > 0) jumpBufT -= dt;
+      if (jumpReq && jumpBufT > 0 && (me3.onG || (coyoteT < 0.1 && !airJumped))) {
+        me3.vy = 6.8;
+        me3.onG = false;
+        airJumped = true;
+        tone(520, 0.12, "sine", 0.07);
+        jumpReq = false;
+        jumpBufT = 0;
+        coyoteT = 0;
+      } else if (jumpBufT <= 0) {
+        jumpReq = false;
+        jumpBufT = 0;
+      }
+    } else {
+      jumpReq = false;
     }
-    jumpReq = false;
     if (CRE.fly) CRE.flyStep(dt, gY);
     else {
       me3.vy = (me3.vy || 0) - 19 * dt;
+      const wasOnG = me3.onG;
       me3.y += me3.vy * dt;
       if (me3.y <= gY) {
         me3.y = Math.min(gY, me3.y + Math.max(0.3, dt * 8));
         me3.vy = 0;
         me3.onG = true;
+        airJumped = false;
+        if (!wasOnG && LAND_TIME > 0) landT = LAND_TIME;
       } else me3.onG = false;
     }
+  }
+  if (landT > 0) {
+    landT = Math.max(0, landT - dt);
+    const s = 1 - 0.06 * Math.sin((1 - landT / LAND_TIME) * Math.PI);
+    me3.g.scale.set(me3.g.scale.x, me3.g.scale.x * s, me3.g.scale.z);
+  } else {
+    me3.g.scale.y = me3.g.scale.x;
   }
   if ((goalPt || goalObj) && Math.hypot(me3.x - px, me3.z - pz) < dt * 0.4) {
     stuck += dt;
@@ -3595,10 +3618,10 @@ function frame(tm) {
     tz = me3.z + BO.lz,
     ty = me3.y + 1.2,
     want = camWant();
-  cam.position.lerp(want, Math.min(1, dt * (sailing ? 6 : 5)));
+  cam.position.lerp(want, 1 - Math.exp(-(sailing ? 6 : 5) * dt));
   cam.userData.look = (cam.userData.look || new THREE.Vector3(tx, ty, tz)).lerp(
     new THREE.Vector3(tx, ty, tz),
-    Math.min(1, dt * 8),
+    1 - Math.exp(-8 * dt),
   );
   cam.lookAt(cam.userData.look);
   if (inCave) caveCamApply(dt);
