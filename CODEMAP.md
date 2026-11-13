@@ -1,0 +1,158 @@
+# Code map (auto-generated, do not edit by hand)
+
+Regenerate after big edits: `node tools/make-codemap.js`.
+Line numbers drift as code changes, so search by the title text (Ctrl+F / grep) to jump.
+
+## game.js (26668 lines)
+
+- **L197** renderer & scene
+- **L351** world objects
+- **L599** structures
+- **L831** cave, hidden parts
+- **L1034** campaign structures
+- **L1359** characters
+- **L1536** state
+- **L1971** sync
+- **L1997** blocks
+- **L2053** plants
+- **L2166** actors & input
+- **L2402** interactions
+- **L2656** modals
+- **L2921** HUD
+- **L2997** input
+- **L3108** movement
+- **L3427** day cycle & loop
+- **L3708** daily / start
+- **L3888** v1.9 extras
+- **L4703** v2
+  - L4770 waterfall on the hill (v4)
+  - L4918 cave mouth in the hill (v4)
+  - L4987 cave interior
+  - L5064 filthy trash piles, plastic bits, flies
+  - L5505 purifier parts
+  - L5559 boat made easy
+  - L5577 love tree
+  - L5608 fishing pier on the real sea
+  - L5770 interactions
+  - L5794 Tab log
+  - L5974 per-frame
+- **L6024** v3
+- **L6580** v4
+  - L6639 cave: lit, readable, still spooky
+  - L6702 purifier parts with real models
+  - L6858 the police island (Twombly is held here)
+  - L7078 sailing + boat story
+  - L7134 leviathan easter egg
+  - L7309 Tab panel (own overlay, switchable pages)
+  - L7433 per-frame
+- **L7450** v2.3
+  - L7465 sickly air: haze sprites + screen tint + more flies
+  - L7548 collisions: altar, waterfall boulders, cave arch, police camp
+  - L7576 cave: stalactites that actually touch the ceiling, smooth light, close-up camera
+  - L7696 boat: real deck, seated pilot
+  - L7737 waterfall foam
+  - L7758 Tab: cycle pages with Tab / Shift+Tab / arrows, click or tap the page buttons
+  - L8005 per-frame
+- **L8066** v3.0: weather, wasteland, restoration
+  - L8288 wasteland: most trees are gone, mud everywhere, they come back as the island heals
+  - L8477 persistence of cleared trash and found parts
+- **L8499** v3.0: fish book, cat, aquarium
+  - L9040 catching
+  - L9112 Twombly: feed fish, affection, gifts
+  - L9167 aquarium (furniture)
+- **L9342** v3.0: blocks, tab pages, map, settings, photo mode
+  - L9534 interactions
+  - L9556 maps
+  - L9774 Tab pages
+  - L10049 photo mode
+- **L10478** v3.1: cave expedition (big rooms, catacombs, pistol, headcrabs, 200 HP)
+  - L11209 health, ammo, run state, HUD
+  - L11262 damage numbers (simple Fortnite-style pop-ups)
+  - L11308 enemies: walker, runner, brute, headcrab
+  - L11789 enemy brain
+  - L11952 tunnel map
+  - L12034 camera: very close in the tunnels, free in the halls
+- **L12074** v3.1: power system (generator -> purifiers)
+- **L12212** v3.1: boat physics (heading, speed, wind, waves, grounding)
+- **L12449** v3.1: Île de la Gendarmerie (full rebuild)
+  - L12450 v3.1 final per-frame
+- **L12506** v3.5 extras: inputs, boat camera, ladder recipe
+- **L12651** textures
+- **L12717** the cave shell (marching squares on the signed distance field)
+- **L12943** clean props: rocks hugging walls, stalactites, glowing mushrooms, torches, catacomb details
+- **L13091** doors: stone frame + planked leaf that sinks into the floor
+- **L13163** quest crystals: tall glowing clusters with a light beam
+- **L13249** spawn decals (flat, no spikes) and wall torches
+- **L13267** exit archway with daylight, relocated to the west wall of the entrance hall
+- **L13324** clear the old cave decorations, put the watching eyes on the new walls
+- **L13354** held items (pistol / crowbar) for the cave
+- **L13387** aim camera (third person shooter, cave only)
+- **L13441** HUD: crosshair, hit marker, objective, use prompt, death screen
+- **L13508** death: a proper screen, then a FULL reset
+- **L13581** combat: melee that hits, a pistol you aim with the crosshair
+- **L13788** per-frame cave logic
+- **L13970** terrain colours: rock, gravel, paved yard, road to the gate
+- **L14017** textures and wall helper
+- **L14104** perimeter wall with barbed wire, steel gate, ladder spot
+- **L14164** Cellhouse (Alcatraz block): barred windows, cells, Twombly in cell 7
+- **L14280** Guardhouse with the key on the desk
+- **L14326** watchtowers with searchlights
+- **L14404** props: crates, barrels, concrete blocks (cover), dock, lighthouse, signs
+- **L14568** the ladder (hidden until you place it) and wall interaction spots
+- **L14672** Twombly's cell, the key, baguettes
+- **L14777** guards (proper uniforms, flat vision sectors), dog
+- **L15040** baguette distraction
+- **L15099** HUD: detection bar, objectives, vignette, busted screen
+- **L15120** climbing the wall
+- **L15181** interactions
+- **L15287** busted: full reset including the boat
+- **L15373** the per-frame prison brain
+- **L15723** puddles that hug the ground and turn from mud to clear blue water as the island heals
+- **L15843** the love tree, rebuilt cleanly (no stray pieces, no hat-shaped blobs)
+- **L15879** shoreline-safe waves
+- **L15889** night: stars, fireflies; day: butterflies (both grow with island health)
+- **L16016** the fixed tick
+  - L16042 two-handed massive bat
+  - L16149 bigger, heavier pistol
+  - L16178 smooth shoulder camera (collision snaps in, eases out)
+  - L16252 combat: delayed bat hit with swing arcs, explosive barrels, combo and power-ups
+  - L16479 explosive barrels
+  - L16574 power-ups
+  - L16634 forge: spend points to upgrade bat + gun, resets when you die
+  - L16706 dodge roll
+  - L16765 cave per-frame extras
+  - L16910 one-off cave setup + static-object optimisation
+- **L17029** boat camera: close and behind
+- **L17052** the Leviathan: terrifying outside, a softie inside
+- **L17382** Île d'If as a Far Cry style outpost: many ways in, silent takedowns, power sabotage
+- **L17636** v5.2: trenches, sandbag lips, outposts, rounds outside the wall, dead trees
+- **L17869** v5.2: it is always raining and gloomy on Ile d'If
+- **L17916** v5.3: walls block sight, beheadings, sniper nest
+- **L18177** v5.5: the sniper outpost tower (replaces the old cliff nest)
+- **L18575** v5.5: smarter cops (radio, bodies, search patterns, hearing, obstacle steering, dog chase)
+- **L19019** tick
+- **L19089** recovery takes weeks: purifiers and clean-up set a TARGET, the island slowly heals toward it (even while you are away)
+- **L19172** the air is ALWAYS visibly dirty until it is pure: veil dome + ground haze + fog + screen tint, all driven by pollution
+- **L19230** trash is harder: more hits per piece, and Baron Smogsworth's ship dumps new rubbish every day
+  - L19465 the gallery of cheeky pin-up posters (stylised silhouettes, cartoon fruit, vintage captions)
+  - L19836 exit arches: fix the west one (it faced the wrong way) and add a second exit in the catacombs
+  - L19914 map: haunted forest (the secret bed is deliberately NOT listed)
+  - L19924 tick
+- **L19961** generic collider generator: builds solid collision from the real meshes (boxes by outline, cylinders by circumference)
+- **L20058** the classic waterfall again: the sheet covers the WHOLE entrance, no windows, no glow, no hints
+- **L20134** haunted forest (bigger, spreads north and south)
+- **L21096** chopping a haunted tree
+- **L21278** one-off gift: a million gold and 99 of every resource
+- **L21305** the ladders: chunky wooden rails, 13 rungs, iron hooks, plus a ghost outline that shows where it goes
+- **L21354** lighthouse climb + a real, visible zipline cable to the cellhouse roof
+- **L21475** autoCollide: the real shape of every prop, wall piece and building (replaces the old guessed circles)
+- **L21491** character: a prison with a past
+- **L24286** v5.6: creative mode: flying + 10 sandbox weapons (all creative-only)
+
+## multiplayer.js (187 lines)
+
+- **L11** function localDB()
+- **L85** function mpConnect()
+- **L97** function peerSync()
+- **L114** function mpBridge()
+

@@ -31,9 +31,13 @@
   };
   function run() {
     $("#menu").remove();
-    const s = document.createElement("script");
-    s.src = "game.js";
-    document.body.appendChild(s);
+    // multiplayer.js must load before game.js (async=false keeps the order)
+    for (const f of ["multiplayer.js", "game.js"]) {
+      const s = document.createElement("script");
+      s.src = f;
+      s.async = false;
+      document.body.appendChild(s);
+    }
     const b = document.createElement("button");
     b.className = "pill";
     b.id = "mnu";
